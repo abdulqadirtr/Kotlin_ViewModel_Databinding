@@ -20,6 +20,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val viewModelFactory = MainViewModelFactory("Abdul Qadir")
+        ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
         val viewModel = makeApi()
         setUpBind(viewModel)
     }

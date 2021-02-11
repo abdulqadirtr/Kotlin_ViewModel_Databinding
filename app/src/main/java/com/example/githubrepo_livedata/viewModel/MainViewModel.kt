@@ -1,5 +1,6 @@
 package com.example.githubrepo_livedata.viewModel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.githubrepo_livedata.DataAdapter
@@ -11,14 +12,18 @@ import retrofit2.Call
 import retrofit2.Response
 import javax.security.auth.callback.Callback
 
-class MainViewModel : ViewModel() {
+class MainViewModel(name: String) : ViewModel() {
 
     var githubResponseData: MutableLiveData<GithubResponseModel>
     lateinit var dataAdapter: DataAdapter
 
+    var myName = name
+
     init {
         githubResponseData = MutableLiveData()
         dataAdapter = DataAdapter()
+
+        Log.d("MainViewModel", "My name is $name")
     }
 
     fun getGithubObserver(): MutableLiveData<GithubResponseModel> {
