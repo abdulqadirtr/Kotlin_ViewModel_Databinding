@@ -1,9 +1,7 @@
-package com.example.githubrepo_livedata.NetworkApi
+package com.example.githubrepo_livedata.Network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
-import java.lang.Appendable
 
 class RetrofitClient {
 

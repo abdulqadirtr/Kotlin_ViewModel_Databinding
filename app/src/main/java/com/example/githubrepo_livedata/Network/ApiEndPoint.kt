@@ -1,13 +1,11 @@
-package com.example.githubrepo_livedata.NetworkApi
+package com.example.githubrepo_livedata.Network
 
-import com.example.githubrepo_livedata.model.GithubResponseModel
+import com.example.githubrepo_livedata.data.model.GithubResponseModel
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiEndPoint {
-
-    ///search/repositories?q=network
     @GET("search/repositories")
     fun getAllRepo(@Query("q") q : String) : Call<GithubResponseModel>
 }

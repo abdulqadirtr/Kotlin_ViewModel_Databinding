@@ -1,32 +1,28 @@
 package com.example.githubrepo_livedata.viewModel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.githubrepo_livedata.DataAdapter
-import com.example.githubrepo_livedata.NetworkApi.ApiEndPoint
-import com.example.githubrepo_livedata.NetworkApi.RetrofitClient
-import com.example.githubrepo_livedata.model.GithubResponseModel
-import com.example.githubrepo_livedata.model.MyData
+import com.example.githubrepo_livedata.data.adapter.DataAdapter
+import com.example.githubrepo_livedata.Network.ApiEndPoint
+import com.example.githubrepo_livedata.Network.RetrofitClient
+import com.example.githubrepo_livedata.data.GithubRepository
+import com.example.githubrepo_livedata.data.model.GithubResponseModel
+import com.example.githubrepo_livedata.data.model.MyData
 import retrofit2.Call
 import retrofit2.Response
-import javax.security.auth.callback.Callback
 
-class MainViewModel : ViewModel() {
+class MainViewModel(private val repository: GithubRepository) : ViewModel() {
 
-    var githubResponseData: MutableLiveData<GithubResponseModel>
-    lateinit var dataAdapter: DataAdapter
+    private val _githubResponseData = MutableLiveData<GithubResponseModel>()
+    val githubResponseData : LiveData<GithubResponseModel> = _githubResponseData
+
+    var dataAdapter: DataAdapter = DataAdapter()
 
     init {
-        githubResponseData = MutableLiveData()
-        dataAdapter = DataAdapter()
+        makeApiCall()
     }
-
-    fun getGithubObserver(): MutableLiveData<GithubResponseModel> {
-
-        return githubResponseData
-    }
-
-    fun getAdapter(): DataAdapter{
+    fun getAdapter(): DataAdapter {
         return dataAdapter
     }
 
@@ -34,26 +30,24 @@ class MainViewModel : ViewModel() {
         dataAdapter.setData(data)
         dataAdapter.notifyDataSetChanged()
     }
-    fun makeApiCall(input: String) {
 
-        val myData = RetrofitClient.getRetrofitInstance().create(ApiEndPoint::class.java)
-        val call = myData.getAllRepo("network")
-        call.enqueue(object : retrofit2.Callback<GithubResponseModel> {
+
+    fun makeApiCall(input: String?=null) {
+        repository.getAllRepository("kotlin").enqueue(object : retrofit2.Callback<GithubResponseModel> {
             override fun onFailure(call: Call<GithubResponseModel>, t: Throwable) {
-                githubResponseData.value = null
+                _githubResponseData.value = null
             }
 
             override fun onResponse(
                 call: Call<GithubResponseModel>,
                 response: Response<GithubResponseModel>
             ) {
-                if (!response.isSuccessful()) githubResponseData.value =
-                    null else githubResponseData.value = response.body()
+                if (!response.isSuccessful()) _githubResponseData.value =
+                    null else _githubResponseData.value = response.body()
             }
 
 
         })
 
     }
-
 }

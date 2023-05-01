@@ -6,8 +6,9 @@
     <data>
         <variable
             name="gitHubData"
-            type="com.example.githubrepo_livedata.model.MyData" />
+            type="com.example.githubrepo_livedata.data.model.MyData" />
     </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
