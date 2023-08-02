@@ -11,13 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubrepo_livedata.BR
-import com.example.githubrepo_livedata.data.Result
-import com.example.githubrepo_livedata.data.Result2
-import com.example.githubrepo_livedata.data.Result3
 import com.example.githubrepo_livedata.databinding.FragmentMainBinding
 import com.example.githubrepo_livedata.viewModel.MainViewModel
 import com.example.githubrepo_livedata.viewModel.MainViewModelFactory
-import retrofit2.Response
 
 class MainFragment : Fragment() {
 
@@ -49,6 +45,7 @@ class MainFragment : Fragment() {
             addItemDecoration(decoration)
         }
 
+
         initObserver()
 
     }
@@ -57,15 +54,15 @@ class MainFragment : Fragment() {
 
         mainViewModel.githubResponseData.observe(viewLifecycleOwner, Observer {result ->
             when (result) {
-                is Result3.Success -> {
+                is Result.Success -> {
                     binding.progressbar.visibility = View.INVISIBLE
                     mainViewModel.setAdapterData(result.data.items)
                 }
-                is Result3.Error -> {
-                    binding.progressbar.visibility = View.INVISIBLE
+                is Result.Error -> {
+                    Toast.makeText(requireContext(), "Error Fetching Data", Toast.LENGTH_LONG).show()
                 }
                 is Result.ErrorException -> {
-                    Toast.makeText(requireContext(), result.exception.message , Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), "Exception" , Toast.LENGTH_LONG).show()
                 }
             }
         })
