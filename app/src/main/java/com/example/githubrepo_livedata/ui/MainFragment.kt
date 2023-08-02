@@ -45,7 +45,6 @@ class MainFragment : Fragment() {
             addItemDecoration(decoration)
         }
 
-
         initObserver()
 
     }
@@ -60,6 +59,9 @@ class MainFragment : Fragment() {
                 }
                 is Result.Error -> {
                     Toast.makeText(requireContext(), "Error Fetching Data", Toast.LENGTH_LONG).show()
+                }
+                is Result.ErrorException -> {
+                    Toast.makeText(requireContext(), result.exception.message , Toast.LENGTH_LONG).show()
                 }
             }
         })
