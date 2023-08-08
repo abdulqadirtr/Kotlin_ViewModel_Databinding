@@ -1,10 +1,16 @@
 package com.example.githubrepo_livedata.ui
 
-sealed class Result<out T : Any> {
+import com.example.githubrepo_livedata.data.model.GithubRepositoryModel
 
-    data class Success<out T : Any>(val data: T) : Result<T>()
-    data class ErrorException(val exception: java.lang.Exception): Result<Nothing>()
-    data class Error(
-        val errorMessage: String,
-    ) : Result<Nothing>()
+//changed this to Generic now and can accept list as well
+sealed class Result3<out T : Any>() {
+    data class Success<T : Any>(val data: T) : Result3<T>()
+    data class Error(val exception: Exception) : Result3<Nothing>()
+
+    override fun toString(): String {
+        return when (this) {
+            is Success<*> -> "Success[data=$data]"
+            is Error -> "Error[exception=$exception]"
+        }
+    }
 }

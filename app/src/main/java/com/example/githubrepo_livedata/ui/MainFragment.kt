@@ -52,17 +52,14 @@ class MainFragment : Fragment() {
 
     private fun initObserver() {
 
-        mainViewModel.githubResponseData.observe(viewLifecycleOwner, Observer {result ->
+        mainViewModel.githubRepo.observe(viewLifecycleOwner, Observer {result ->
             when (result) {
-                is Result.Success -> {
+                is Result3.Success -> {
                     binding.progressbar.visibility = View.INVISIBLE
-                    mainViewModel.setAdapterData(result.data.items)
+                    mainViewModel.setAdapterData(result.data)
                 }
-                is Result.Error -> {
+                is Result3.Error -> {
                     Toast.makeText(requireContext(), "Error Fetching Data", Toast.LENGTH_LONG).show()
-                }
-                is Result.ErrorException -> {
-                    Toast.makeText(requireContext(), "Exception" , Toast.LENGTH_LONG).show()
                 }
             }
         })

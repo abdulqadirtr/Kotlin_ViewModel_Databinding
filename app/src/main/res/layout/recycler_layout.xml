@@ -6,7 +6,7 @@
     <data>
         <variable
             name="gitHubData"
-            type="com.example.githubrepo_livedata.data.model.MyData" />
+            type="com.example.githubrepo_livedata.data.model.GithubRepositoryModel" />
     </data>
 
     <LinearLayout

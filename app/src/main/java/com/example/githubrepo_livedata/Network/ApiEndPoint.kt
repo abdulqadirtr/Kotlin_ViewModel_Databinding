@@ -1,12 +1,14 @@
 package com.example.githubrepo_livedata.Network
 
-import com.example.githubrepo_livedata.data.model.GithubResponseModel
-import retrofit2.Call
+import com.example.githubrepo_livedata.data.model.GithubRepositoryModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiEndPoint {
-    @GET("search/repositories")
-   suspend fun getAllRepo(@Query("q") q : String) : Response<GithubResponseModel>
+    @GET("repositories")
+   suspend fun getAllRepo(@Query("page") pager : Int,
+                          @Query("per_page") pageCount : Int) : Response<List<GithubRepositoryModel>>
+
+
 }
