@@ -4,20 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubrepo_livedata.BR
-import com.example.githubrepo_livedata.data.Result
-import com.example.githubrepo_livedata.data.Result2
 import com.example.githubrepo_livedata.data.Result3
 import com.example.githubrepo_livedata.databinding.FragmentMainBinding
 import com.example.githubrepo_livedata.viewModel.MainViewModel
 import com.example.githubrepo_livedata.viewModel.MainViewModelFactory
-import retrofit2.Response
 
 class MainFragment : Fragment() {
 
@@ -49,6 +45,12 @@ class MainFragment : Fragment() {
             addItemDecoration(decoration)
         }
 
+        binding.recyclerViewOne.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            val decoration = DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
+            addItemDecoration(decoration)
+        }
+
 
         initObserver()
 
@@ -56,17 +58,33 @@ class MainFragment : Fragment() {
 
     private fun initObserver() {
 
+        //this one if without list to check error handling
         mainViewModel.githubResponseData.observe(viewLifecycleOwner, Observer {result ->
             when (result) {
                 is Result3.Success -> {
                     binding.progressbar.visibility = View.INVISIBLE
-                    mainViewModel.setAdapterData(result.data.items)
+                   mainViewModel.setAdapterData(result.data.items)
                 }
                 is Result3.Error -> {
                     binding.progressbar.visibility = View.INVISIBLE
                 }
             }
         })
+
+        //with list for error handling this one
+        mainViewModel.githubRepo.observe(viewLifecycleOwner, Observer {result ->
+            when (result) {
+                is Result3.Success -> {
+                    binding.progressbar.visibility = View.INVISIBLE
+                    mainViewModel.setRepoData(result.data)
+                }
+                is Result3.Error -> {
+                    binding.progressbar.visibility = View.INVISIBLE
+                }
+            }
+        })
+
+
 
     }
 
