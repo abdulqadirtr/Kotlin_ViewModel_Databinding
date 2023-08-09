@@ -14,7 +14,7 @@ class GithubPagingSource(private val api: ApiEndPoint) : PagingSource<Int, Githu
         val position = params.key ?: 1
 
         return try {
-            val response = api.getAllRepo()
+            val response = api.getAllRepo(1,1)
             if (response.isSuccessful) {
                 val data = response.body() ?: emptyList()
                 val prevKey = if (position == 1) null else position - 1

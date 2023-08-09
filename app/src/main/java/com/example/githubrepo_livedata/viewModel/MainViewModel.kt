@@ -37,7 +37,7 @@ class MainViewModel(private val repository: GithubRepository) : ViewModel() {
     }
 
     fun getAllRepo() = viewModelScope.launch {
-        val response = repository.getAllRepository()
+        val response = repository.getAllRepository(5,5)
         try {
             if (response.isSuccessful) {
                 _githubRepo.value = Result3.Success(response.body()!!)

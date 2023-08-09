@@ -15,12 +15,10 @@ import com.example.githubrepo_livedata.databinding.FragmentMainBinding
 import com.example.githubrepo_livedata.viewModel.MainViewModel
 import com.example.githubrepo_livedata.viewModel.MainViewModelFactory
 
-class MainFragment : Fragment() {
+class MainFragment : BaseFragment<FragmentMainBinding>() {
 
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var _binding: FragmentMainBinding
 
-    private val binding get() = _binding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
