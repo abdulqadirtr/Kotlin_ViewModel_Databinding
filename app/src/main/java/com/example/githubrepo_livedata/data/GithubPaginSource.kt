@@ -9,12 +9,12 @@ import com.example.githubrepo_livedata.data.model.GithubResponseModel
 import retrofit2.HttpException
 import java.io.IOException
 
-class GithubPagingSource(private val api: ApiEndPoint) : PagingSource<Int, GithubRepositoryModel>() {
+class GithubPagingSource(private val githubRepository: GithubRepository) : PagingSource<Int, GithubRepositoryModel>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GithubRepositoryModel> {
         val position = params.key ?: 1
 
         return try {
-            val response = api.getAllRepo(1,1)
+            val response = githubRepository.getAllRepository(1)
             if (response.isSuccessful) {
                 val data = response.body() ?: emptyList()
                 val prevKey = if (position == 1) null else position - 1

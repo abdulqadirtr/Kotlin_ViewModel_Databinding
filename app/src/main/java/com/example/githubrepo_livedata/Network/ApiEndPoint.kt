@@ -7,8 +7,7 @@ import retrofit2.http.Query
 
 interface ApiEndPoint {
     @GET("repositories")
-   suspend fun getAllRepo(@Query("page") pager : Int,
-                          @Query("per_page") pageCount : Int) : Response<List<GithubRepositoryModel>>
+   suspend fun getAllRepo(@Query("page") pager : Int) : Response<List<GithubRepositoryModel>>
 
 
 }

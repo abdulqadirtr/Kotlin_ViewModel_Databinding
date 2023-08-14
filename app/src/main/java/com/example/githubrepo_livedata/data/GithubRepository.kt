@@ -11,5 +11,5 @@ import kotlinx.coroutines.flow.Flow
 class GithubRepository {
     private val retrofit = RetrofitClient.getRetrofitInstance().create(ApiEndPoint::class.java)
 
-    suspend fun getAllRepository(page : Int, page_per : Int) = retrofit.getAllRepo(page, page_per)
+    suspend fun getAllRepository(page : Int) = retrofit.getAllRepo(page)
 }
