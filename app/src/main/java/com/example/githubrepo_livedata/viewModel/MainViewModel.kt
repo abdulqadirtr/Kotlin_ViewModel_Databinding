@@ -12,13 +12,10 @@ import com.example.githubrepo_livedata.data.GithubPagingSource
 import com.example.githubrepo_livedata.data.adapter.DataAdapter
 import com.example.githubrepo_livedata.data.GithubRepository
 import com.example.githubrepo_livedata.data.model.GithubRepositoryModel
-import com.example.githubrepo_livedata.ui.Result3
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: GithubRepository) : ViewModel() {
 
-    private val _githubRepo = MutableLiveData<Result3<List<GithubRepositoryModel>>>()
-    val githubRepo: LiveData<Result3<List<GithubRepositoryModel>>> = _githubRepo
 
 
     //the first DataAdapter is without list
@@ -29,12 +26,6 @@ class MainViewModel(private val repository: GithubRepository) : ViewModel() {
     }.flow.cachedIn(viewModelScope)
 
 
-    init {
-    }
-
-    fun getAdapter(): DataAdapter {
-        return dataAdapter
-    }
 
     fun setAdapterData(data: PagingData<GithubRepositoryModel>) {
         viewModelScope.launch {
