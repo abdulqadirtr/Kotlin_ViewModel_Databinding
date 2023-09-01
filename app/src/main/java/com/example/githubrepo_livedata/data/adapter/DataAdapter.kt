@@ -5,15 +5,12 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.githubrepo_livedata.R
 import com.example.githubrepo_livedata.data.model.GithubRepositoryModel
 import com.example.githubrepo_livedata.databinding.RecyclerLayoutBinding
 
 class DataAdapter: PagingDataAdapter<GithubRepositoryModel ,DataAdapter.MyViewHolder>(DiffCallback) {
-    var items = ArrayList<GithubRepositoryModel>()
-
-    fun setData(data: List<GithubRepositoryModel>) {
-        this.items.addAll(data)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
       val layoutInflater = LayoutInflater.from(parent.context)
@@ -42,6 +39,19 @@ class DataAdapter: PagingDataAdapter<GithubRepositoryModel ,DataAdapter.MyViewHo
         fun bind(data: GithubRepositoryModel){
 
             binding.gitHubData = data
+
+            // Load the image using Glide
+            val thumbImage = binding.thubmImage
+            val imageUrl = data.owner.avatar_url // Assuming avatar_url is the image URL
+            Glide.with(thumbImage)
+                .load(imageUrl)
+                .circleCrop()
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .error(R.drawable.ic_launcher_foreground)
+                .fallback(R.drawable.ic_launcher_foreground)
+                .into(thumbImage)
+
+
             binding.executePendingBindings()
         }
 

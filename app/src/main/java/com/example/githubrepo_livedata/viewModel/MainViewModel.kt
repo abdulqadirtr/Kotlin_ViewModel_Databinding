@@ -12,8 +12,10 @@ import com.example.githubrepo_livedata.data.GithubPagingSource
 import com.example.githubrepo_livedata.data.adapter.DataAdapter
 import com.example.githubrepo_livedata.data.GithubRepository
 import com.example.githubrepo_livedata.data.model.GithubRepositoryModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
+private const val ITEMS_PER_PAGE = 5
 class MainViewModel(private val repository: GithubRepository) : ViewModel() {
 
 
@@ -21,13 +23,14 @@ class MainViewModel(private val repository: GithubRepository) : ViewModel() {
     //the first DataAdapter is without list
     var dataAdapter: DataAdapter = DataAdapter()
 
-    val repositories = Pager(PagingConfig(pageSize = 1)) {
+    val repositories: Flow<PagingData<GithubRepositoryModel>> = Pager(PagingConfig(ITEMS_PER_PAGE, enablePlaceholders = false)) {
         GithubPagingSource(repository)
-    }.flow.cachedIn(viewModelScope)
+    }.flow
+        .cachedIn(viewModelScope)
 
 
 
-    fun setAdapterData(data: PagingData<GithubRepositoryModel>) {
+   fun setAdapterData(data: PagingData<GithubRepositoryModel>) {
         viewModelScope.launch {
             dataAdapter.submitData(data)
         }

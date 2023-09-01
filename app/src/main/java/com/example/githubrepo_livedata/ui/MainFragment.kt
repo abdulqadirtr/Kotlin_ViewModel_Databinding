@@ -5,12 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubrepo_livedata.BR
+import com.example.githubrepo_livedata.data.adapter.DataAdapter
 import com.example.githubrepo_livedata.data.adapter.LoadMoreAdapter
 import com.example.githubrepo_livedata.databinding.FragmentMainBinding
 import com.example.githubrepo_livedata.viewModel.MainViewModel
@@ -55,8 +58,10 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
     private fun initObserver() {
 
         lifecycleScope.launch{
-            mainViewModel.repositories.collect {
-                mainViewModel.setAdapterData(it)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.repositories.collect {
+                    mainViewModel.setAdapterData(it)
+                }
             }
         }
 
@@ -66,6 +71,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
                 binding.progressbar.isVisible = state is LoadState.Loading
             }
         }
+
 
     }
 
