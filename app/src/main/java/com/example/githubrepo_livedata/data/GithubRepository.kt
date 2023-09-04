@@ -6,7 +6,9 @@ import androidx.paging.PagingData
 import com.example.githubrepo_livedata.Network.ApiEndPoint
 import com.example.githubrepo_livedata.Network.RetrofitClient
 import com.example.githubrepo_livedata.data.model.GithubRepositoryModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+
 
 class GithubRepository {
     private val retrofit = RetrofitClient.getRetrofitInstance().create(ApiEndPoint::class.java)

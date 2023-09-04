@@ -17,10 +17,11 @@ import com.example.githubrepo_livedata.data.adapter.DataAdapter
 import com.example.githubrepo_livedata.data.adapter.LoadMoreAdapter
 import com.example.githubrepo_livedata.databinding.FragmentMainBinding
 import com.example.githubrepo_livedata.viewModel.MainViewModel
-import com.example.githubrepo_livedata.viewModel.MainViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainFragment : BaseFragment<FragmentMainBinding>() {
 
     private lateinit var mainViewModel: MainViewModel
@@ -38,7 +39,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mainViewModel = ViewModelProvider(this, MainViewModelFactory())[MainViewModel::class.java]
+        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         binding.setVariable(BR.viewModel, mainViewModel)
         binding.executePendingBindings()

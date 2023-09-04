@@ -12,11 +12,14 @@ import com.example.githubrepo_livedata.data.GithubPagingSource
 import com.example.githubrepo_livedata.data.adapter.DataAdapter
 import com.example.githubrepo_livedata.data.GithubRepository
 import com.example.githubrepo_livedata.data.model.GithubRepositoryModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 private const val ITEMS_PER_PAGE = 5
-class MainViewModel(private val repository: GithubRepository) : ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor(private val repository: GithubRepository) : ViewModel() {
 
 
 
